@@ -16,4 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/api/v1/', routesV1);
+app.all('*', (req, res) => {
+  return res.send('This route is not defined');
+});
 export default app;

@@ -1,8 +1,12 @@
-import express from 'express'
-import taskRouter from './tasks'
+import express from 'express';
+import taskRouter from './tasks';
+import { login, signup } from './../../Controller/auth';
+import { verifyToken } from './../../Middleware/Auth';
 
-const router = express.Router()
+const router = express.Router();
+router.post('/signup',signup);
+router.post('/login',login);
 
-router.use('/tasks',taskRouter)
+router.use('/tasks',verifyToken, taskRouter);
 
-export default router
+export default router;
