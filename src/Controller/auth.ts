@@ -1,4 +1,4 @@
-import { Request as ExpressRequest ,Response,} from 'express';
+import { Request as ExpressRequest, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import asyncHandler from './../helpers/asyncHandler';
@@ -33,7 +33,7 @@ export const signup = asyncHandler(async (req, res) => {
     },
   });
 });
-export const login = asyncHandler(async (req: Request, res:Response) => {
+export const login = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await UserRepo.findByObj({ email });
 
@@ -44,7 +44,6 @@ export const login = asyncHandler(async (req: Request, res:Response) => {
     });
   }
 
-
   const isMatch = await bcrypt.compare(password, user.password as string);
   if (!isMatch) {
     return res.status(400).json({
@@ -52,13 +51,15 @@ export const login = asyncHandler(async (req: Request, res:Response) => {
       message: 'Invalid credentials',
     });
   }
-console.log({id:user._id})
-  const token = jwt.sign({ id: user._id },'THIS_is_0321654016545646532_VERY_strong_KEY'as string);
+  const token = jwt.sign(
+    { id: user._id },
+    'THIS_is_0321654016545646532_VERY_strong_KEY' as string,
+    { expiresIn: '2d' }
+  );
   req.user = user;
   res.status(200).json({
     status: 'success',
     token,
     data: { user: user },
   });
-
 });
