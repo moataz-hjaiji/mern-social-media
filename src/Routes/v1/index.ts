@@ -1,5 +1,5 @@
 import express from 'express';
-import taskRouter from './tasks';
+import taskRouter from './task/tasks';
 import { login, signup } from './../../Controller/auth';
 import { verifyToken } from './../../Middleware/Auth';
 

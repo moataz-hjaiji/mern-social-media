@@ -1,4 +1,6 @@
 import express from 'express';
+import validator from './../../../helpers/validator';
+import taskSchema from './schema'
 import {
   getAlltasks,
   createTask,
@@ -7,12 +9,12 @@ import {
   updateTask,
   sharedMyTask,
   getMySharedTask,
-} from './../../Controller/tasksController';
+} from '../../../Controller/tasksController';
 
 const router = express.Router();
 
 router.get('/', getAlltasks);
-router.post('/', createTask);
+router.post('/',validator(taskSchema), createTask);
 router.get('/:id', getTask);
 router.put('/:id', updateTask);
 router.put('/:id/comment', getAllCommentsTask);
